@@ -39,6 +39,7 @@
         },
         methods: {
             calculateValues() {
+                // use cors-anywhere API to circumvent CORS POLICY, allows cross-origin request from localhost
                 axios
                     .get('http://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/latest?base=' + this.selectedCurrency)
                     .then(response => {
@@ -47,28 +48,36 @@
                             this.outstandingLoansValue = 0;
 
                             const rates = response.data.rates;
+
+                            // CONVERT the value of each outstanding loan AND CALCULATE the total value
                             this.rows.filter(e => e[2] > 0).forEach((loan) => {
                                 this.outstandingLoansValue += parseFloat(loan[2]) / rates[loan[3]];
                             });
                             this.outstandingLoansValue = this.outstandingLoansValue.toFixed(2);
 
+                            // CONVERT the value of each loan AND CALCULATE the total value
                             this.rows.forEach((loan) => {
                                 this.totalLoansValue += parseFloat(loan[1]) / rates[loan[3]];
                             });
-
                             this.totalLoansValue = this.totalLoansValue.toFixed(2);
                         }
                     )
             },
         },
         watch: {
-            // if tid is updated, this will trigger... I Think :-D
             rows: function (value) {
+
+                // number of outstanding loans
                 this.outstandingLoans = this.rows.filter(e => e[2] > 0).length;
+
+                // average APR for outstanding loans
                 const aprArr = this.rows.filter(e => e[2] > 0).map(x => parseFloat(x[5]));
                 this.outstandingAverageApr = (aprArr.reduce((sum, x) => sum + x) / aprArr.length).toFixed(2);
+
+                // map all currencies from the CSV file
                 this.currencies = this.rows.map(x => x[3]);
 
+                //Calculate PAID OFF PERIOD for the outstanding loans
                 this.rows.filter(e => e[2] > 0).forEach((loan) => {
                     const payPerMonth = loan[1] / (loan[6] * 12);
                     const outstandingYears = (loan[2] / payPerMonth / 12).toFixed(2);

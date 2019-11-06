@@ -1901,10 +1901,11 @@ __webpack_require__.r(__webpack_exports__);
     calculateValues: function calculateValues() {
       var _this = this;
 
+      // use cors-anywhere API to circumvent CORS POLICY, allows cross-origin request from localhost
       axios.get('http://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/latest?base=' + this.selectedCurrency).then(function (response) {
         _this.totalLoansValue = 0;
         _this.outstandingLoansValue = 0;
-        var rates = response.data.rates;
+        var rates = response.data.rates; // CONVERT the value of each outstanding loan AND CALCULATE the total value
 
         _this.rows.filter(function (e) {
           return e[2] > 0;
@@ -1912,7 +1913,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.outstandingLoansValue += parseFloat(loan[2]) / rates[loan[3]];
         });
 
-        _this.outstandingLoansValue = _this.outstandingLoansValue.toFixed(2);
+        _this.outstandingLoansValue = _this.outstandingLoansValue.toFixed(2); // CONVERT the value of each loan AND CALCULATE the total value
 
         _this.rows.forEach(function (loan) {
           _this.totalLoansValue += parseFloat(loan[1]) / rates[loan[3]];
@@ -1923,13 +1924,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    // if tid is updated, this will trigger... I Think :-D
     rows: function rows(value) {
       var _this2 = this;
 
+      // number of outstanding loans
       this.outstandingLoans = this.rows.filter(function (e) {
         return e[2] > 0;
-      }).length;
+      }).length; // average APR for outstanding loans
+
       var aprArr = this.rows.filter(function (e) {
         return e[2] > 0;
       }).map(function (x) {
@@ -1937,10 +1939,12 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.outstandingAverageApr = (aprArr.reduce(function (sum, x) {
         return sum + x;
-      }) / aprArr.length).toFixed(2);
+      }) / aprArr.length).toFixed(2); // map all currencies from the CSV file
+
       this.currencies = this.rows.map(function (x) {
         return x[3];
-      });
+      }); //Calculate PAID OFF PERIOD for the outstanding loans
+
       this.rows.filter(function (e) {
         return e[2] > 0;
       }).forEach(function (loan) {
