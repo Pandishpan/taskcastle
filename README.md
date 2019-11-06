@@ -1,5 +1,6 @@
 # Castle Trust Code Challenge
 
+![ui castle test](https://github.com/Pandishpan/taskcastle/raw/master/ui.jpg)
 ## Instructions
 
 The coding challenge consists of several tasks that are meant to be done in order. 
