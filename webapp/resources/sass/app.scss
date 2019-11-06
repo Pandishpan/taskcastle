@@ -1,0 +1,28 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+h1 {
+    margin-bottom: 1em;
+}
+
+#app {
+    margin-top: 1em;
+}
+
+#instructions {
+    background: #fff;
+    padding-top: 1em;
+    box-shadow: #ccc 0px 0px 9px;
+    
+    @include media-breakpoint-up(sm) {
+        border-radius: 0 15px 15px 0;
+        font-size: 0.9em;
+    }
+}
+
