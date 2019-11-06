@@ -1,8 +1,8 @@
-# Castle Trust Code Challange
+# Castle Trust Code Challenge
 
 ## Instructions
 
-The coding challange consists of several tasks that are meant to be done in order. 
+The coding challenge consists of several tasks that are meant to be done in order. 
 
 The **first task** is to get the Laravel app in this repo up and running.
 

@@ -20,7 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('task-list', require('./components/TaskList.vue').default);
-
+Vue.use(require('vue-moment'));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,4 +29,36 @@ Vue.component('task-list', require('./components/TaskList.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data: {
+        headers: [],
+        rows: []
+    },
+    mounted() {
+        axios
+            .get('sample.csv')
+            .then(response => {
+                const text = response.data
+                const re = /\r\n|\n\r|\n|\r/g
+                const lines = text.replace(re, '\n').split('\n')
+                for (let i = 0; i < lines.length; i++) {
+                    // IGNORE IF EMPTY LINE
+                    if (!lines[i].trim().length) continue
+                    const ss = lines[i].split(',')
+                    // IGNORE IF EMPTY COLLUMNS
+                    if (!ss.length) continue
+                    // SAVE THE LINE AS HEADER OR NORMAL ROW
+                    if (i == 0) {
+                        for (let j = 0; j < ss.length; j++) {
+                            this.headers.push(ss[j].trim())
+                        }
+                    } else {
+                        const row = []
+                        for (let j = 0; j < ss.length; j++) {
+                            row.push(ss[j].trim())
+                        }
+                        this.rows.push(row)
+                    }
+                }
+            })
+    }
 });
