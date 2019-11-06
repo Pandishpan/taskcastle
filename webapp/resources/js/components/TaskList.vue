@@ -14,7 +14,8 @@
 
                 <!-- Task requirements -->
                 <div class="requirements">
-                    <p>The tasks in this Instructions panel don't have all their requirements shown yet. Modify the task list component to satisfy the requirements below.</p>
+                    <p>The tasks in this Instructions panel don't have all their requirements shown yet. Modify the task
+                        list component to satisfy the requirements below.</p>
                     <p class="mb-0"><b>Requirements:</b></p>
                     <ol class="pl-3">
                         <li>When a task heading is clicked show/hide the requirements for that task.</li>
@@ -24,22 +25,24 @@
             </li>
 
             <li class="list-group-item">
-                <h4>List Page</h4>
+                <h4 @click="hideListPage=!hideListPage">List Page</h4>
 
-                <div class="requirements d-none">
+                <div class="requirements" :class="{'d-none': hideListPage}">
                     <p class="mb-0"><b>Requirements:</b></p>
                     <ol class="pl-3">
                         <li>Replace "Playground" page heading with "Loan List"</li>
                         <li>Load data from the CSV file: <i>resources/sample.csv</i></li>
-                        <li>Display the data from the CSV on the page in a user friendly format (e.g. date formatted as "1st January 2001")</li>
+                        <li>Display the data from the CSV on the page in a user friendly format (e.g. date formatted as
+                            "1st January 2001")
+                        </li>
                     </ol>
                 </div>
             </li>
 
             <li class="list-group-item">
-                <h4>Loan List Summary</h4>
+                <h4 @click="hideListLoan=!hideListLoan">Loan List Summary</h4>
 
-                <div class="requirements d-none">
+                <div class="requirements" :class="{'d-none': hideListLoan}">
                     <p class="mb-0"><b>Requirements:</b></p>
                     <ol class="pl-3">
                         <li>Create a Vue component to display loan list summary details</li>
@@ -65,7 +68,14 @@
 <script>
     export default {
         mounted() {
-            console.log('Task list Component mounted.')
+            console.log('Task list Component mounted.');
+        },
+
+        data: function () {
+            return {
+                hideListPage: true,
+                hideListLoan: true
+            };
         }
     }
 </script>

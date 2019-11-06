@@ -1924,9 +1924,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Task list Component mounted.');
+  },
+  data: function data() {
+    return {
+      hideListPage: true,
+      hideListLoan: true
+    };
   }
 });
 
@@ -37204,129 +37213,175 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h3", [_vm._v("Task list:")]),
+    _vm._v(" "),
+    _c("ul", { staticClass: "list-group list-group-flush tasks mb-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("li", { staticClass: "list-group-item" }, [
+        _c(
+          "h4",
+          {
+            on: {
+              click: function($event) {
+                _vm.hideListPage = !_vm.hideListPage
+              }
+            }
+          },
+          [_vm._v("List Page")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "requirements",
+            class: { "d-none": _vm.hideListPage }
+          },
+          [_vm._m(2), _vm._v(" "), _vm._m(3)]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "list-group-item" }, [
+        _c(
+          "h4",
+          {
+            on: {
+              click: function($event) {
+                _vm.hideListLoan = !_vm.hideListLoan
+              }
+            }
+          },
+          [_vm._v("Loan List Summary")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "requirements",
+            class: { "d-none": _vm.hideListLoan }
+          },
+          [_vm._m(4), _vm._v(" "), _vm._m(5)]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h3", [_vm._v("Task list:")]),
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("h4", [_vm._v("Run the app ✓")]),
       _vm._v(" "),
-      _c("ul", { staticClass: "list-group list-group-flush tasks mb-3" }, [
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("h4", [_vm._v("Run the app ✓")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "requirements mb-0" }, [_vm._v("Done!")])
+      _c("p", { staticClass: "requirements mb-0" }, [_vm._v("Done!")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("h4", [_vm._v("Show Instructions")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "requirements" }, [
+        _c("p", [
+          _vm._v(
+            "The tasks in this Instructions panel don't have all their requirements shown yet. Modify the task\n                    list component to satisfy the requirements below."
+          )
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("h4", [_vm._v("Show Instructions")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "requirements" }, [
-            _c("p", [
-              _vm._v(
-                "The tasks in this Instructions panel don't have all their requirements shown yet. Modify the task list component to satisfy the requirements below."
-              )
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [
-              _c("b", [_vm._v("Requirements:")])
-            ]),
-            _vm._v(" "),
-            _c("ol", { staticClass: "pl-3" }, [
-              _c("li", [
-                _vm._v(
-                  "When a task heading is clicked show/hide the requirements for that task."
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v("All task requirements should be hidden by default.")
-              ])
-            ])
-          ])
-        ]),
+        _c("p", { staticClass: "mb-0" }, [_c("b", [_vm._v("Requirements:")])]),
         _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("h4", [_vm._v("List Page")]),
+        _c("ol", { staticClass: "pl-3" }, [
+          _c("li", [
+            _vm._v(
+              "When a task heading is clicked show/hide the requirements for that task."
+            )
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "requirements d-none" }, [
-            _c("p", { staticClass: "mb-0" }, [
-              _c("b", [_vm._v("Requirements:")])
-            ]),
-            _vm._v(" "),
-            _c("ol", { staticClass: "pl-3" }, [
-              _c("li", [
-                _vm._v('Replace "Playground" page heading with "Loan List"')
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v("Load data from the CSV file: "),
-                _c("i", [_vm._v("resources/sample.csv")])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v(
-                  'Display the data from the CSV on the page in a user friendly format (e.g. date formatted as "1st January 2001")'
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("h4", [_vm._v("Loan List Summary")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "requirements d-none" }, [
-            _c("p", { staticClass: "mb-0" }, [
-              _c("b", [_vm._v("Requirements:")])
-            ]),
-            _vm._v(" "),
-            _c("ol", { staticClass: "pl-3" }, [
-              _c("li", [
-                _vm._v(
-                  "Create a Vue component to display loan list summary details"
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [_vm._v("Display the component on the Loan List page")]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v(
-                  "The summary should display the following:\n                        "
-                ),
-                _c("ul", [
-                  _c("li", [_vm._v("total number of loans outstanding")]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _vm._v(
-                      "base currency: dropdown with all the currencies from the CSV (default to GBP)"
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _vm._v("total loan amount taken in base currency")
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _vm._v("total loan amount outstanding in base currency")
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [_vm._v("average APR for loans outstanding")]),
-                  _vm._v(" "),
-                  _c("li", [_vm._v("time left until all loans are paid off")])
-                ]),
-                _vm._v("\n                        Use the "),
-                _c("a", { attrs: { href: "https://exchangeratesapi.io/" } }, [
-                  _vm._v("API")
-                ]),
-                _vm._v(" to obtain exchange rates.\n                    ")
-              ])
-            ])
+          _c("li", [
+            _vm._v("All task requirements should be hidden by default.")
           ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mb-0" }, [
+      _c("b", [_vm._v("Requirements:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ol", { staticClass: "pl-3" }, [
+      _c("li", [_vm._v('Replace "Playground" page heading with "Loan List"')]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v("Load data from the CSV file: "),
+        _c("i", [_vm._v("resources/sample.csv")])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          'Display the data from the CSV on the page in a user friendly format (e.g. date formatted as\n                        "1st January 2001")\n                    '
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mb-0" }, [
+      _c("b", [_vm._v("Requirements:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ol", { staticClass: "pl-3" }, [
+      _c("li", [
+        _vm._v("Create a Vue component to display loan list summary details")
+      ]),
+      _vm._v(" "),
+      _c("li", [_vm._v("Display the component on the Loan List page")]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "The summary should display the following:\n                        "
+        ),
+        _c("ul", [
+          _c("li", [_vm._v("total number of loans outstanding")]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "base currency: dropdown with all the currencies from the CSV (default to GBP)"
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [_vm._v("total loan amount taken in base currency")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("total loan amount outstanding in base currency")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("average APR for loans outstanding")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("time left until all loans are paid off")])
+        ]),
+        _vm._v("\n                        Use the "),
+        _c("a", { attrs: { href: "https://exchangeratesapi.io/" } }, [
+          _vm._v("API")
+        ]),
+        _vm._v(" to obtain exchange rates.\n                    ")
       ])
     ])
   }
