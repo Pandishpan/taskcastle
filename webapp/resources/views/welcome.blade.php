@@ -26,4 +26,6 @@
         </table>
     </div>
 
+    <loan-summary :rows="rows"></loan-summary>
+
 @endsection

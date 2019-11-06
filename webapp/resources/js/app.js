@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('task-list', require('./components/TaskList.vue').default);
+Vue.component('loan-summary', require('./components/LoanSummary.vue').default);
 Vue.use(require('vue-moment'));
 /**
  * Next, we will create a fresh Vue application instance and attach it to

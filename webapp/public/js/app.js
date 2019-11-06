@@ -1851,6 +1851,128 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoanSummary.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LoanSummary.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {//console.log('Loan Summary Component mounted.');
+    //this.rows.filter
+  },
+  methods: {
+    calculateValues: function calculateValues() {
+      var _this = this;
+
+      axios.get('http://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/latest?base=' + this.selectedCurrency).then(function (response) {
+        _this.totalLoansValue = 0;
+        _this.outstandingLoansValue = 0;
+        var rates = response.data.rates;
+
+        _this.rows.filter(function (e) {
+          return e[2] > 0;
+        }).forEach(function (loan) {
+          _this.outstandingLoansValue += parseFloat(loan[2]) / rates[loan[3]];
+        });
+
+        _this.outstandingLoansValue = _this.outstandingLoansValue.toFixed(2);
+
+        _this.rows.forEach(function (loan) {
+          _this.totalLoansValue += parseFloat(loan[1]) / rates[loan[3]];
+        });
+
+        _this.totalLoansValue = _this.totalLoansValue.toFixed(2);
+      });
+    }
+  },
+  watch: {
+    // if tid is updated, this will trigger... I Think :-D
+    rows: function rows(value) {
+      var _this2 = this;
+
+      this.outstandingLoans = this.rows.filter(function (e) {
+        return e[2] > 0;
+      }).length;
+      var aprArr = this.rows.filter(function (e) {
+        return e[2] > 0;
+      }).map(function (x) {
+        return parseFloat(x[5]);
+      });
+      this.outstandingAverageApr = (aprArr.reduce(function (sum, x) {
+        return sum + x;
+      }) / aprArr.length).toFixed(2);
+      this.currencies = this.rows.map(function (x) {
+        return x[3];
+      });
+      this.rows.filter(function (e) {
+        return e[2] > 0;
+      }).forEach(function (loan) {
+        var payPerMonth = loan[1] / (loan[6] * 12);
+        var outstandingYears = (loan[2] / payPerMonth / 12).toFixed(2);
+
+        if (_this2.paidOffIn < outstandingYears) {
+          _this2.paidOffIn = outstandingYears;
+        }
+      });
+      this.calculateValues();
+    },
+    selectedCurrency: function selectedCurrency(value) {
+      this.calculateValues();
+    }
+  },
+  props: ['rows'],
+  data: function data() {
+    return {
+      outstandingLoans: 0,
+      outstandingAverageApr: 0,
+      outstandingLoansValue: 0,
+      totalLoansValue: 0,
+      paidOffIn: 0,
+      currencies: [],
+      selectedCurrency: "GBP"
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TaskList.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TaskList.vue?vue&type=script&lang=js& ***!
@@ -37198,6 +37320,102 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "bubble" }, [
+      _c("h1", [_vm._v(_vm._s(_vm.outstandingLoans))]),
+      _vm._v(" "),
+      _c("h6", [_vm._v("loans outstanding")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bubble" }, [
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCurrency,
+              expression: "selectedCurrency"
+            }
+          ],
+          staticClass: "current-currency",
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectedCurrency = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.currencies, function(currency) {
+          return _c(
+            "option",
+            { key: currency, domProps: { value: currency } },
+            [_vm._v("\n                " + _vm._s(currency) + "\n            ")]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("h6", [_vm._v("base currency")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bubble" }, [
+      _c("h1", [_vm._v(_vm._s(_vm.totalLoansValue))]),
+      _vm._v(" "),
+      _c("h6", [_vm._v("loans amount taken")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bubble" }, [
+      _c("h1", [_vm._v(_vm._s(_vm.outstandingLoansValue))]),
+      _vm._v(" "),
+      _c("h6", [_vm._v("loans amount outstanding")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bubble" }, [
+      _c("h1", [_vm._v(_vm._s(_vm.outstandingAverageApr))]),
+      _vm._v(" "),
+      _c("h6", [_vm._v("average APR for loans outstanding")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bubble" }, [
+      _c("h1", [_vm._v(_vm._s(_vm.paidOffIn))]),
+      _vm._v(" "),
+      _c("h6", [_vm._v("Years until all loans are paid off")])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TaskList.vue?vue&type=template&id=0afd8bae&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TaskList.vue?vue&type=template&id=0afd8bae& ***!
@@ -54269,6 +54487,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('task-list', __webpack_require__(/*! ./components/TaskList.vue */ "./resources/js/components/TaskList.vue")["default"]);
+Vue.component('loan-summary', __webpack_require__(/*! ./components/LoanSummary.vue */ "./resources/js/components/LoanSummary.vue")["default"]);
 Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -54372,6 +54591,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/LoanSummary.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/LoanSummary.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoanSummary.vue?vue&type=template&id=e6be670a& */ "./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a&");
+/* harmony import */ var _LoanSummary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoanSummary.vue?vue&type=script&lang=js& */ "./resources/js/components/LoanSummary.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LoanSummary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/LoanSummary.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/LoanSummary.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/LoanSummary.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoanSummary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./LoanSummary.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoanSummary.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoanSummary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./LoanSummary.vue?vue&type=template&id=e6be670a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoanSummary.vue?vue&type=template&id=e6be670a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoanSummary_vue_vue_type_template_id_e6be670a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
